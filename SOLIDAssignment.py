@@ -1,6 +1,8 @@
 
 from abc import ABC,abstractmethod
 
+
+
 class Custtype(ABC):
     @abstractmethod
     def is_retailcust(self)->bool:
