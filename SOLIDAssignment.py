@@ -51,7 +51,7 @@ class CustomCharges(ABC):
 class TaxAdd(CustomCharges):
     taxapplicable="0"
     def AddingTax(self,amount):
-        print(f"Added tax is {amount}")
+        print(f"tax is applied for orders>24 is {amount}")
         taxapplicable=amount
     def is_taxapplicable(self) ->str:
         return self.taxapplicable
@@ -68,7 +68,7 @@ class NormalOrders(Orders):
         self.tax=tax
         self.shipspeed=shipspped
     def placeorder(self,quan,price):
-        print(f"Normal order total is {quan*price}")
+        print(f"Normal order total is {quan*price}. If Order total is >24, tax will be added")
         if((price*quan)>24):
             taxcal=self.tax.taxam
             print(f"Including Tax is {(price*quan)+int(taxcal)}")
@@ -89,7 +89,7 @@ class CustomLengths(ABC):
 class PromoLength(CustomLengths):
     sizeexists=False
     def checkproductsize(self,size):
-        print(f"Exists for {size} size")
+        print(f"Exists items for {size} size")
         self.sizeexists=True
     def is_sizeexists(self) ->bool:
         return self.sizeexists
@@ -114,7 +114,7 @@ class PromotionalIProducts(Products):
     def loadproducts(self,producttype):
         if not self.size.is_sizeexists():
             raise Exception("No Item exists")
-        print(f"Loding {producttype}")
+        print(f"Loding Items ( {producttype})")
 
 class Shippers(ABC):
 
@@ -157,39 +157,39 @@ class TelanganaShipper(Shippers):
     def get_shipper(self,shipping_state):
         if not self.trackitem.trackurlexists():
             raise Exception("no track url")
-        print(f"TS Shipper {self.southindia}",shipping_state)
+        print(f"TS Shipper has track facility in {shipping_state} or ",self.southindia)
 
 psize=PromoLength()
 promoitem=PromotionalIProducts("Gents",psize)
 psize.checkproductsize("L")
 promoitem.loadproducts("Shirt")
 
-electronics=Electronics("Chargable")
-electronics.loadproducts("TVs")
+# electronics=Electronics("Chargable")
+# electronics.loadproducts("TVs")
 
 tax=TaxAdd(10)
 normalorder=NormalOrders("1 day",tax)
 tax.AddingTax(10)
-normalorder.placeorder(4,10)
+normalorder.placeorder(1,2)
 
-schedorder=ScheduledOrders("12/12/12")
-schedorder.placeorder(2,4)
+# schedorder=ScheduledOrders("12/12/12")
+# schedorder.placeorder(2,4)
 
-cus=Typeofcust()
-cuss=IndianCust("test",cus)
-cus.checkcusttype("retail")
-cuss.getaddress("t1","s1","TS")
+# cus=Typeofcust()
+# cuss=IndianCust("test",cus)
+# cus.checkcusttype("retail")
+# cuss.getaddress("name","sur name","TS")
 
 uscust=USCust("fn")
-uscust.getaddress("ff","ll","FL")
+uscust.getaddress("first name","last name","FL")
 
 
 # Telangana
 track=TrackItem()
-shipper=TelanganaShipper("South India",track)
+shipper=TelanganaShipper("Any country",track)
 track.showingtrackurl("https://trackitem")
 shipper.get_shipper("Telangana")
 
 # Andra
-shipper=AndraShipper("South India")
-shipper.get_shipper("Andra")
+# shipper=AndraShipper("South India")
+# shipper.get_shipper("Andra")
