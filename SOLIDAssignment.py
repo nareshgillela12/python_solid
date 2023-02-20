@@ -25,10 +25,20 @@ class Customers(ABC):
     def getaddress(self,name1,name2,state):
         pass
 
+# here indian cust and us cust are different classes to do different things (single responsibilty)
+#we are using Customer abstract class to extend functionality and to close modifications (open close principle)
+
 class IndianCust(Customers):
     def __init__(self,name,cust:Custtype):
+#here we are using custtype class to get extra feature and uscust class not using this feature so we are not using custtype there.
+#(so interface suggrigation acchived through coposition)
+# above we are using "custype" insted of "typeofcust" class. we are using top class (high lvel class).
+# (so dependancy invertion working)
+#the above features working for all the classes.
         self.custtype=cust
         self.name=name
+
+    # here we are using above variable (name) as like we want, with out changing method signature (liskow substute principle)
     def getaddress(self,name,surname,state):
         print(f"Indian Addess {name} {surname}",state)
         if self.custtype.is_retailcust():
@@ -144,7 +154,7 @@ class AndraShipper(Shippers):
 
     def __init__(self,privateship):
         self.peship=privateship
-
+# here we are using above variable as like we want, with out changing method signature (liskow substute principle)
     def get_shipper(self,shipping_state):
         print(f"AP Shipper {self.peship}",shipping_state)
 
